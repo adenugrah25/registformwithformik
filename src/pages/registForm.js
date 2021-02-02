@@ -1,9 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Formik, Field, Form, ErrorMessage, useFormikContext } from "formik";
-import * as Yup from 'yup';
+import * as yup from "yup";
 
-const isRequired = (message) => (value) => (!!value ? undefined : message);
+// const isRequired = (message) => (value) => (!!value ? undefined : message);
+
+const validationSchem = yup.object ({
+Username: yup.string().required('This field is required'),
+Email: yup.string().email('Invalid email address').required('This field is required'),
+Gender: yup.string().required('This field is required'),
+Phonenumber: yup.string().required('This field is required')
+})
 
 class Regist extends React.Component {
   constructor(props) {
@@ -21,6 +28,7 @@ class Regist extends React.Component {
             Gender: "",
             Phonenumber: "",
           }}
+          validationSchema={validationSchem}
           onSubmit={async (values) => {
             await new Promise((r) => setTimeout(r, 500));
             alert(JSON.stringify(values, null, 4));
@@ -31,7 +39,7 @@ class Regist extends React.Component {
             <div>
               <Field
                 name="Username"
-                validate={isRequired("This field is required")}
+                validate={validationSchem}
                 type="text"
                 placeholder="Your username"
               />
@@ -41,7 +49,7 @@ class Regist extends React.Component {
             <div>
               <Field
                 name="Email"
-                validate={isRequired("This field is required")}
+                validate={validationSchem}
                 type="text"
                 placeholder="Email"
               />
@@ -51,7 +59,7 @@ class Regist extends React.Component {
             <div>
               <Field
                 name="Gender"
-                validate={isRequired("This field is required")}
+                validate={validationSchem}
                 type="text"
                 placeholder="Gender"
               />
@@ -61,7 +69,7 @@ class Regist extends React.Component {
             <div>
               <Field
                 name="Phonenumber"
-                validate={isRequired("This field is required")}
+                validate={validationSchem}
                 type="text"
                 placeholder="Your phone number"
               />
@@ -69,7 +77,7 @@ class Regist extends React.Component {
             </div>
             <br />
             <button type="submit">Submit</button>
-            
+
             <hr />
           </Form>
         </Formik>
